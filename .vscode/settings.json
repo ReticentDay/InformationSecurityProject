@@ -1,0 +1,5 @@
+{
+    "python.formatting.provider": "yapf",
+    "git.ignoreLimitWarning": true,
+    "python.pythonPath": "${workspaceFolder}\\djangogirls_venv\\Scripts\\python.exe"
+}
