@@ -1,0 +1,31 @@
+
+<!doctype html>
+<html>
+
+    <head>
+        <title>JavaScript RSA Encryption</title>
+        <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+        <script src="jsencrypt-master/bin/jsencrypt.min.js"></script>
+        
+    </head>
+    <body>
+        <div class='decrypt'>
+            <button id='decrypt_rsa'>decrypt</button><br />
+            your key:<input type="text" name="key" id="key"><br />
+            your private_key:<textarea name="private_key" cols="50" rows="10" id="private_key"></textarea><br />
+            your SDES_key:<textarea name="SDES_key" cols="50" rows="10" id="SDES_key"></textarea><br />
+        </div>
+        
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#decrypt_rsa').click(function(){
+                    var crypt = new JSEncrypt();
+                    var private_key = $('#private_key').val();
+                    crypt.setPrivateKey(private_key);
+                    var decrypted = crypt.decrypt($('#key').val());
+                    $('#SDES_key').val(decrypted);
+                });
+            });
+        </script>
+    </body>
+</html>
