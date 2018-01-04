@@ -1,0 +1,12 @@
+<table>
+    <tr>
+        <th>id</th>
+        <th>title</th>
+    </tr>
+    {% for book in book_lists %}
+        <tr>
+            <th>{{ book.pk }}</th>
+            <th><a href="/show/book/{{ book.pk }}"> {{ book.title }} </a></th>
+        </tr>
+    {% endfor %}
+</table>

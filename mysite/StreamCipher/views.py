@@ -1,9 +1,7 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 
-# Create your views here.
-
-def RsaEncrypt(e, N, m):
-    put = 1
-    for i in range(1,e):
-        put = ((put % N) * (m % N)) % N
-    return put
+def index(request):
+    
+def add_users(request):
+    

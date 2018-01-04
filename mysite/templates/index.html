@@ -1,0 +1,13 @@
+<form action="/login/" method="post"> 
+    {% csrf_token %}
+    <input type="text" name="name" id="">
+     User name:<input type="submit" name="" value="登入">
+</form>
+<hr>
+第一次登入？在此註冊
+<form action="/add_user/" method="post">
+     {% csrf_token %}
+    User name:<input type="text" name="name" id=""><br>
+    Your public_key:<textarea name="public_key" cols="40" rows="5"></textarea><br>
+    <input type="submit" name="" value="註冊">
+</form>
