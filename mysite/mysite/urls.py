@@ -22,5 +22,5 @@ urlpatterns = [
     url(r'^add_user/$',add_user),
     url(r'^login/$',login),
     url(r'^bookList/$',bookList),
-    url(r'^/show/book/(?P<pk>\d+)/$',bookShow),
+    url(r'^show/book/(?P<pk>\d+)/$',bookShow),
 ]

@@ -1,6 +1,9 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from rsa.models import Users,BookList,UsersBook
+import RSA_ENC
+import SDES
+import random
 # Create your views here.
 # please write the ras encryption in here
 
@@ -41,22 +44,22 @@ def bookList(request):
 def bookShow(request,pk):
     if 'name' in request.COOKIES:
         name = request.COOKIES['name']
-        try:
-            user = Users.objects.get(name = name)
-            book_id = pk
-            user_id = user.pk
+        #try:
+        user = Users.objects.get(name = name)
+        book_id = pk
+        user_id = user.pk
+        book = UsersBook.objects.filter(user_pk = user_id, book_pk = book_id)
+        if len(book) == 0:
+            books = BookList.objects.get(pk=book_id)
+            key = bin(random.randint(0,255)).replace('0b', '')
+            bookContent = SDES.EachExecute(key,books.content)
+            key = RSA_ENC.encrypt_and_decrypt_test(user.public_key,key)
+            UsersBook.objects.create(user_pk = user_id, book_pk = book_id, book_key = key, book_content = bookContent)
             book = UsersBook.objects.filter(user_pk = user_id, book_pk = book_id)
-            if book == null:
-                book = BookList.objects.get(pk=book_id)
-                #key = SDES.getKey()
-                #bookContent = SDES.encryp(book.content,key)
-                #key = rsa.encryp(user.public_key,key)
-                #UsersBook.objects.create(user_pk = user_id, book_pk = book_id, book_key = key, book_content = bookContent)
-                #book = UsersBook.objects.filter(user_pk = user_id, book_pk = book_id)
-            return render(request, 'show.html', {
-                "bookContent" : "",
-            })
-        except:
-            return redirect('/')
+        return render(request, 'show.html', {
+            "bookContent" : book[0].book_content,
+        })
+        #except:
+        #    return redirect('/')
     else:
         return redirect('/')
