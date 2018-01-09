@@ -227,10 +227,10 @@ def EachExecute(key: str, plain: str):
 	cipher = ''
 	for i in plain:
 		put = bin(ord(i)).replace('0b', '')
-		put1 = put[len(put)-8 if len(put)-8>0 else 0:len(put)]
-		put2 = put[0:len(put)-8 if len(put)-8>0 else 0]
-		cipher += Execute(key,put1)
-		cipher += Execute(key,put2)
+		#put1 = put[len(put)-8 if len(put)-8>0 else 0:len(put)]
+		#put2 = put[0:len(put)-8 if len(put)-8>0 else 0]
+		#cipher += Execute(key,put1)
+		cipher += Execute(key,put)
 	return cipher
 
 cy = EachExecute('0011111101','我愛你')

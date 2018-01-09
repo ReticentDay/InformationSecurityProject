@@ -14,7 +14,7 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from rsa.views import add_user, index, bookList, login, bookShow
+from rsa.views import add_user, index, bookList, login, bookShow, getKey
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^login/$',login),
     url(r'^bookList/$',bookList),
     url(r'^show/book/(?P<pk>\d+)/$',bookShow),
+    url(r'^get_key/(?P<pk>\d+)/$',getKey),
 ]

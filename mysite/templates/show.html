@@ -1,3 +1,66 @@
-<tabla>
-    <th>{{ bookContent }}</th>
-</tabla>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>JavaScript RSA Encryption</title>
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+     {% load staticfiles %}
+    <script src="{% static 'js/jsencrypt-master/bin/jsencrypt.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/S-DES-decode.js' %}" type="text/javascript"></script>
+
+</head>
+
+<body>
+    <div class='decrypt'>
+        <button id='decrypt_rsa'>decrypt</button>
+        <a href='/get_key/{{book_pk}}'>get key</a>
+        <br /> your key:
+        <input type="text" name="key" id="key">
+        <br /> your private_key:
+        <textarea name="private_key" cols="50" rows="10" id="private_key"></textarea>
+        <br /> your SDES_key:
+        <textarea name="SDES_key" cols="50" rows="10" id="SDES_key"></textarea>
+        <br />
+        <br /> your book:
+        <textarea name="book" cols="50" rows="10" id="book">{{ bookContent }}</textarea>
+        <br />
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+            $('#decrypt_rsa').click(function () {
+                var crypt = new JSEncrypt();
+                var private_key = $('#private_key').val();
+                crypt.setPrivateKey(private_key);
+                var decrypted = crypt.decrypt($('#key').val());
+                $('#SDES_key').val(decrypted);
+                decrypted = pat(10, decrypted);
+                var key = Array.from(decrypted);
+                console.log(key);
+                var enText = "";
+                var plain = Array.from($('#book').val());
+                for(var i = 0;i < plain.length;i++){
+                    var putCO = plain[i].charCodeAt();
+                    //console.log(putCO);
+                    var put2 = pat(8,putCO.toString(2));
+                    //console.log(put2);
+                    var plants = Array.from(put2);
+                    plants = strDec(plants, key);
+                    //console.log(plants);
+                    plain[i] = ''.concat(plants[0], plants[1], plants[2], plants[3], plants[4], plants[5], plants[6], plants[7]);
+                    //console.log(element);
+                    var put = plain[i];
+                    var putInt = parseInt(put, 2);
+                    //console.log(putInt);
+                    //console.log(String.fromCharCode(putInt));
+                    enText += String.fromCharCode(putInt);
+                }
+                //console.log(enText);
+                $('#book').val(enText);
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -5,7 +5,7 @@
     <head>
         <title>JavaScript RSA Encryption</title>
         <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-        <script src="jsencrypt-master/bin/jsencrypt.min.js"></script>
+        <script src="{% static "jsencrypt-master/bin/jsencrypt.min.js" %}"></script>
         
     </head>
     <body>
@@ -14,6 +14,9 @@
             your key:<input type="text" name="key" id="key"><br />
             your private_key:<textarea name="private_key" cols="50" rows="10" id="private_key"></textarea><br />
             your SDES_key:<textarea name="SDES_key" cols="50" rows="10" id="SDES_key"></textarea><br />
+            <br /> your book:
+            <textarea name="book" cols="50" rows="10" id="book">{{ bookContent }}</textarea>
+            <br />
         </div>
         
         <script type="text/javascript">

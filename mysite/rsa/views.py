@@ -58,8 +58,33 @@ def bookShow(request,pk):
             book = UsersBook.objects.filter(user_pk = user_id, book_pk = book_id)
         return render(request, 'show.html', {
             "bookContent" : book[0].book_content,
+            "book_pk" : book_id,
         })
         #except:
         #    return redirect('/')
+    else:
+        return redirect('/')
+
+def getKey(request,pk):
+    if 'name' in request.COOKIES:
+        name = request.COOKIES['name']
+        try:
+            user = Users.objects.get(name = name)
+            book_id = pk
+            user_id = user.pk
+            book = UsersBook.objects.filter(user_pk = user_id, book_pk = book_id)
+            if len(book) == 0:
+                books = BookList.objects.get(pk=book_id)
+                key = bin(random.randint(0,255)).replace('0b', '')
+                bookContent = SDES.EachExecute(key,books.content)
+                key = RSA_ENC.encrypt_and_decrypt_test(user.public_key,key)
+                UsersBook.objects.create(user_pk = user_id, book_pk = book_id, book_key = key, book_content = bookContent)
+                book = UsersBook.objects.filter(user_pk = user_id, book_pk = book_id)
+            return render(request, 'get_key.html', {
+                "bookKey" : book[0].book_key,
+                "book_pk" : book_id,
+            })
+        except:
+            return redirect('/')
     else:
         return redirect('/')

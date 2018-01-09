@@ -19,5 +19,3 @@ class UsersBook(models.Model):
     book_pk = models.IntegerField()
     book_key = models.TextField()
     book_content = models.TextField()
-    def __str__(self):
-        return self.pk 
